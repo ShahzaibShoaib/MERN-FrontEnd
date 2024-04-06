@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import logo from '../img/logo.jpg'
 
 function Navbar() {
   return (
     <nav class="navbar navbar-expand-lg" style={{backgroundColor: "#e3f2fd"}}>
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">JAOGUMO</a>
+      <img src={logo} style={{maxWidth: "3.5%", maxHeight: "3.5%"}}/>
+        <a class="navbar-brand mx-2" href="#"><strong>JAOGUMO</strong></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,8 +21,8 @@ function Navbar() {
             </li>
           </ul>
           <form class="d-flex" role="search">
-            <Link to="/login"><button class="btn btn-outline-primary mx-3" type="submit">Login</button></Link>
-            <Link to="/signup"><button class="btn btn-outline-primary" type="submit"> SignUp</button></Link>
+            <Link to="/login"><button class="btn btn-outline-success mx-3" type="submit">Login</button></Link>
+            <Link to="/signup"><button class="btn btn-outline-success" type="submit"> SignUp</button></Link>
           </form>
         </div>
       </div>
