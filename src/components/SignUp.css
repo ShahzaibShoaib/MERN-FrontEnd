@@ -124,3 +124,8 @@
 .google-button > span{
     margin-left: 10px;
 }
+
+.select{
+    width: 125px;
+    font-size: 15px;
+}
