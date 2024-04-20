@@ -6,7 +6,7 @@ import googleIcon from '../img/google-icon.png';
 import axios from 'axios';
 
 function SignUp() {
-    const [formData, setFormData] = useState({
+    const [data, setData] = useState({
         firstname: '',
         lastname: '',
         email: '',
@@ -16,18 +16,27 @@ function SignUp() {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
         try {
-            const response = await axios.post('http://localhost:3000/auth/signup', formData);
-            // Handle successful signup, e.g., redirect to login page
-            navigate('/login');
-        } catch (error) {
-            // Handle signup error
-            console.error('Signup failed:', error);
-        }
+            e.preventDefault();
+            const res = await axios({
+              url: "http://localhost:3000/auth/signUp",
+              method: "post",
+              data: data,
+            });
+            if (res.data.success) {
+                navigate("/login");
+                window.alert(res.data.msg);
+            } else {
+                window.alert(res.data.msg);
+            }
+          } catch (e) {
+            window.alert("ERROR");
+            console.error(e);
+          }
     };
 
     return (
@@ -44,7 +53,7 @@ function SignUp() {
                         className="input"
                         placeholder="First Name"
                         name="firstname"
-                        value={formData.firstname}
+                        value={data.firstname}
                         onChange={handleChange}
                     />
                     <input
@@ -52,7 +61,7 @@ function SignUp() {
                         className="input"
                         placeholder="Last Name"
                         name="lastname"
-                        value={formData.lastname}
+                        value={data.lastname}
                         onChange={handleChange}
                     />
                     <input
@@ -60,7 +69,7 @@ function SignUp() {
                         className="input"
                         placeholder="Email"
                         name="email"
-                        value={formData.email}
+                        value={data.email}
                         onChange={handleChange}
                     />
                     <input
@@ -68,12 +77,12 @@ function SignUp() {
                         className="input"
                         placeholder="Password"
                         name="password"
-                        value={formData.password}
+                        value={data.password}
                         onChange={handleChange}
                     />
                     <select
                         name="role"
-                        value={formData.role}
+                        value={data.role}
                         onChange={handleChange}
                     >
                         <option value="">Pick a Role: </option>
