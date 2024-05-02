@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './Login.css'
 import login from '../img/login.jpg'
@@ -7,75 +7,85 @@ import axios from "axios";
 
 function Login() {
 
-	const [formData, setFormData] = useState({
+    const [data, setData] = useState({
         email: '',
         password: ''
     });
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const handleSubmit = async () => {
+    const loginSubmit = async (e) => {
         try {
-            const response = await axios.post('http://localhost:3000/auth/login', formData);
-            // Handle successful login, e.g., redirect to homepage
+          e.preventDefault();
+          const res = await axios({
+            url: "http://localhost:3000/auth/login",
+            method: "post",
+            data: data,
+          });
+          window.alert(res.data.msg);
+          if (res.data.token) {
+            // Redirect to homepage on successful login
             navigate('/');
+          }
         } catch (error) {
-            // Handle login error
-            console.error('Login failed:', error);
+          window.alert("Invalid credentials");
+          console.error(error);
         }
-    };
+      };
 
-	
-	return (
-		<div className="container">
-			<h1 className="heading">Login Form</h1>
-			<div className="form_container">
-				<div className="left">
-					<img className="img" src={login} alt="login" />
-				</div>
-				<div className="right">
-					<h2 className="from_heading">Login</h2>
-					<input
+    return (
+        <div className="container">
+            <h1 className="heading">Login Form</h1>
+            <div className="form_container">
+                <div className="left">
+                    <img className="img" src={login} alt="login" />
+                </div>
+                <div className="right">
+                
+                    <h2 className="from_heading">Login</h2>
+                    <input
                         type="email"
                         className="input"
                         placeholder="Email"
                         name="email"
-                        value={formData.email}
                         onChange={handleChange}
+                        value={data.email}
                     />
                     <input
                         type="password"
                         className="input"
                         placeholder="Password"
                         name="password"
-                        value={formData.password}
                         onChange={handleChange}
+                        value={data.password}
                     />
                     <select
                         name="role"
-                        value={formData.role}
                         onChange={handleChange}
+                        value={data.role}
                     >
                         <option value="">Pick a Role: </option>
                         <option value="owner">Owner</option>
                         <option value="user">User</option>
                     </select>
-					<Link to="/"><button className="button" onSubmit={handleSubmit}>Login</button></Link>
-					<p className="text">or</p>
-					<button className="google-button">
-					<img src={googleIcon} alt="google icon" />
-						<span>SignIn with Google</span>
-					</button>
-					<p className="text">
-						New Here? <Link to="/signup">SignUp</Link>
-					</p>
-				</div>
-			</div>
-		</div>
-	);
+                    <button className="button" onClick={loginSubmit}>Login</button>
+                    <p className="text">or</p>
+                    <button className="google-button">
+                        <img src={googleIcon} alt="google icon" />
+                        <span>SignIn with Google</span>
+                    </button>
+                    <p className="text">
+                        New Here? <Link to="/signup">SignUp</Link>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default Login;

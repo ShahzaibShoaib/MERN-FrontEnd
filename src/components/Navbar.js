@@ -1,13 +1,19 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import logo from '../img/logo.jpg'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../img/logo.jpg';
 
 function Navbar() {
-  return (
-    <nav className="navbar navbar-expand-lg" style={{backgroundColor: "#e3f2fd"}}>
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const handleLogout = () => {
+    // Perform logout actions here, such as clearing local storage, etc.
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#e3f2fd' }}>
       <style>
-      {`
+        {`
           .navbar-nav .nav-link {
             position: relative;
             transition: color 0.3s;
@@ -31,35 +37,68 @@ function Navbar() {
       </style>
 
       <div className="container-fluid">
-        <img src={logo} style={{maxWidth: "3.5%", maxHeight: "3.5%"}}/>
-        <Link className="navbar-brand mx-2" to="/"><strong>JAOGUMO</strong></Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <img src={logo} style={{ maxWidth: '3.5%', maxHeight: '3.5%' }} alt="Logo" />
+        <Link className="navbar-brand mx-2" to="/">
+          <strong>JAOGUMO</strong>
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-auto" >
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
             <li className="nav-item mx-2">
-              <a className="nav-link active" aria-current="page" href="#">Discover</a>
+              <a className="nav-link active" aria-current="page" href="#">
+                Discover
+              </a>
             </li>
             <li className="nav-item mx-2">
-              <a className="nav-link active" aria-current="page" href="#">Trips</a>
+              <a className="nav-link active" aria-current="page" href="#">
+                Trips
+              </a>
             </li>
             <li className="nav-item mx-2">
-              <a className="nav-link active" aria-current="page" href="#">Review</a>
+              <a className="nav-link active" aria-current="page" href="#">
+                Review
+              </a>
             </li>
             <li className="nav-item mx-2">
-              <a className="nav-link active" aria-current="page" href="#">More</a>
+              <a className="nav-link active" aria-current="page" href="#">
+                More
+              </a>
             </li>
           </ul>
-          <form className="d-flex" role="search">
-            <Link to="/login"><button className="btn btn-outline-dark mx-3" type="submit">Login</button></Link>
-            <Link to="/signup"><button className="btn btn-outline-dark" type="submit"> SignUp</button></Link>
-          </form>
+          <div className="d-flex">
+            {isLoggedIn ? (
+              <button className="btn btn-outline-dark mx-3" onClick={handleLogout}>
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button className="btn btn-outline-dark mx-3" type="submit">
+                    Login
+                  </button>
+                </Link>
+                <Link to="/signup">
+                  <button className="btn btn-outline-dark" type="submit">
+                    SignUp
+                  </button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
-
-export default Navbar
+export default Navbar;
