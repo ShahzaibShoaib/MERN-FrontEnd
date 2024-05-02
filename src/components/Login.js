@@ -11,36 +11,31 @@ function Login() {
         email: '',
         password: ''
     });
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const [user, setUser] = useState({ loggedIn: false, token: "" });
-
-    const handleSubmit = async (e) => {
+    const loginSubmit = async (e) => {
         try {
-            e.preventDefault();
-            const res = await axios({
-                url: "http://localhost:3000/auth/login",
-                method: "post",
-                data: data,
-            });
-            window.alert(res.data.msg);
-            // Check if login was successful based on response data
-            if (res.data.success) {
-                navigate("/");
-                if (res.data.token) {
-                    setUser({ loggedIn: true, token: res.data.token });
-                }
-            }
-        } catch (e) {
-            window.alert("ERROR");
-            console.error(e);
+          e.preventDefault();
+          const res = await axios({
+            url: "http://localhost:3000/auth/login",
+            method: "post",
+            data: data,
+          });
+          window.alert(res.data.msg);
+          if (res.data.token) {
+            // Redirect to homepage on successful login
+            navigate('/');
+          }
+        } catch (error) {
+          window.alert("Invalid credentials");
+          console.error(error);
         }
-    };
-
+      };
 
     return (
         <div className="container">
@@ -50,33 +45,34 @@ function Login() {
                     <img className="img" src={login} alt="login" />
                 </div>
                 <div className="right">
+                
                     <h2 className="from_heading">Login</h2>
                     <input
                         type="email"
                         className="input"
                         placeholder="Email"
                         name="email"
-                        value={data.email}
                         onChange={handleChange}
+                        value={data.email}
                     />
                     <input
                         type="password"
                         className="input"
                         placeholder="Password"
                         name="password"
-                        value={data.password}
                         onChange={handleChange}
+                        value={data.password}
                     />
                     <select
                         name="role"
-                        value={data.role}
                         onChange={handleChange}
+                        value={data.role}
                     >
                         <option value="">Pick a Role: </option>
                         <option value="owner">Owner</option>
                         <option value="user">User</option>
                     </select>
-                    <button className="button" onClick={handleSubmit}>Login</button>
+                    <button className="button" onClick={loginSubmit}>Login</button>
                     <p className="text">or</p>
                     <button className="google-button">
                         <img src={googleIcon} alt="google icon" />
@@ -85,6 +81,7 @@ function Login() {
                     <p className="text">
                         New Here? <Link to="/signup">SignUp</Link>
                     </p>
+
                 </div>
             </div>
         </div>

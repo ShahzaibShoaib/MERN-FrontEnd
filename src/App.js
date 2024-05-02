@@ -1,4 +1,5 @@
 import './App.css';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import {
@@ -12,12 +13,16 @@ import Homepage from './components/Homepage';
 
 
 function App() {
+
+
+
+
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route exact path='/' element={<Homepage/>}/>
-        <Route exact path='/login' element={<Login />} />
+        <Route exact path='/' element={<Homepage />} />
+        <Route exact path='/login' element={<Login/>} />
         <Route exact path='/signup' element={<SignUp />} />
       </Routes>
     </Router>

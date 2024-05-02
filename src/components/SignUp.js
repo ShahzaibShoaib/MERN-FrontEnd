@@ -28,7 +28,7 @@ function SignUp() {
               data: data,
             });
             if (res.data.success) {
-                navigate("/login");
+                navigate('/login');
                 window.alert(res.data.msg);
             } else {
                 window.alert(res.data.msg);
